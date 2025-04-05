@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   CardContent,
   CardDescription,
@@ -9,6 +10,7 @@ import {
   CollapsibleTrigger,
   Separator,
 } from "@/components/ui";
+import Link from "next/link";
 
 interface ClientCardProps {
   user: User;
@@ -20,7 +22,7 @@ export const ClientCard = ({ user }: ClientCardProps) => (
       <CollapsibleTrigger asChild className="cursor-pointer">
         <CardHeader className="flex flex-row items-start gap-4 w-full">
           <div>
-            <CardTitle className="text-2xl">
+            <CardTitle className="text-2xl flex items-center">
               {user.Surname} {user.Name} {user.Patronymic}
             </CardTitle>
             <CardDescription>ID: {user.UserGuid}</CardDescription>
@@ -30,10 +32,15 @@ export const ClientCard = ({ user }: ClientCardProps) => (
       <CollapsibleContent>
         <CardContent className="grid gap-6">
           <div>
-            <h3 className="text-lg font-semibold mb-2">
+            <Button className="w-full ">
+              <Link className="text-sm" href={`/clients/${user.UserGuid}`}>
+                Счета
+              </Link>
+            </Button>
+            <h3 className="text-lg font-semibold mt-2">
               Персональная информация
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 mt-2 md:grid-cols-2 gap-4">
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
                   Полное имя

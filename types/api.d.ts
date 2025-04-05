@@ -35,7 +35,7 @@ type Currency = "RUB" | "USD" | "EUR";
 
 interface Account {
   AccountGuid: string;
-  AccountState: "opened" | "closed";
+  AccountState: "Открыт" | "Закрыт";
   Account: string;
   Currency: Currency;
   Balance: number;
