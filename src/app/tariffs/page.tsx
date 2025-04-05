@@ -1,8 +1,17 @@
 import { getCreditTariffs } from "@/utils/api/requests/get";
 import { CreateTariffForm, CreditTariffCard } from "./(components)";
+import { cookies } from "next/headers";
 
 const TariffsPage = async () => {
-  const tariffsResponse = await getCreditTariffs({});
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value!;
+  const tariffsResponse = await getCreditTariffs({
+    config: {
+      headers: {
+        Authorization: token,
+      },
+    },
+  });
 
   return (
     <main className="py-6 flex justify-evenly">

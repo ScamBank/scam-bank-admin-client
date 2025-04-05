@@ -1,8 +1,17 @@
 import { getUsers } from "@/utils/api/requests/get";
 import { ClientCard, CreateUserForm } from "./(components)";
+import { cookies } from "next/headers";
 
 const ClientsPage = async () => {
-  const users = await getUsers();
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value!;
+  const users = await getUsers({
+    config: {
+      headers: {
+        Authorization: token,
+      },
+    },
+  });
 
   return (
     <main className="py-6 flex justify-evenly">

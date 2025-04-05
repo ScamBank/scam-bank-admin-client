@@ -1,11 +1,16 @@
 import fetches from "@siberiacancode/fetches";
+import { getCookie } from "../helpers";
 
 export const instance = fetches.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api",
+  headers: {
+    Authorization: typeof window !== "undefined" ? getCookie("token")! : "",
+  },
 });
 
 instance.interceptors.request.use(
   (config) => {
+    console.log("@inter headers", config.headers);
     console.log(
       `${config.method?.toUpperCase()} request on: ${config.url}\nCache: ${config.next?.tags}`,
     );
