@@ -32,15 +32,13 @@ export const ClientCard = ({ user }: ClientCardProps) => (
       <CollapsibleContent>
         <CardContent className="grid gap-6">
           <div>
-            <Button className="w-full ">
-              <Link className="text-sm" href={`/clients/${user.UserGuid}`}>
-                Счета
-              </Link>
-            </Button>
+            <Link className="text-sm" href={`/clients/${user.UserGuid}`}>
+              <Button className="w-full ">Счета</Button>
+            </Link>
             <h3 className="text-lg font-semibold mt-2">
               Персональная информация
             </h3>
-            <div className="grid grid-cols-1 mt-2 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
                   Полное имя
