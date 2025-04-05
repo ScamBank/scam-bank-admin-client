@@ -13,6 +13,7 @@ export const middleware = (req: NextRequest) => {
     response.cookies.set("token", token, {
       secure: false,
       httpOnly: false,
+      sameSite: "strict",
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
@@ -20,6 +21,7 @@ export const middleware = (req: NextRequest) => {
     response.cookies.set("guid", decoded.UserGuid, {
       secure: false,
       httpOnly: false,
+      sameSite: "strict",
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
