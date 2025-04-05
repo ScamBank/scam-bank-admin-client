@@ -35,6 +35,8 @@ export const CreateUserForm = () => {
       BirthDate: "",
       Name: "",
       passport: "",
+      Password: "",
+      Login: "",
       Patronymic: "",
       PhoneNumber: "",
       Snils: "",
@@ -44,19 +46,17 @@ export const CreateUserForm = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const body = {
+      ...values,
       Address: "кукушкина",
       BirthDate: parse(
         values.BirthDate,
         "dd.MM.yyyy",
         new Date(),
       ).toISOString(),
-      Name: values.Name,
       PassportNumber: values.passport.split(" ")[1],
       PassportSeries: values.passport.split(" ")[0],
       Patronymic: values.Patronymic,
       PhoneNumber: values.PhoneNumber,
-      Snils: values.Snils,
-      Surname: values.Surname,
       UserType: "User",
     } satisfies CreateUserDto;
     const response = await postCreateUser(body);
@@ -67,7 +67,7 @@ export const CreateUserForm = () => {
   }
 
   return (
-    <Card className="w-full max-w-lg h-fit fixed">
+    <Card className="w-full max-w-lg">
       <CardHeader>
         <CardTitle>Создание нового клиента</CardTitle>
         <CardDescription>
@@ -170,23 +170,6 @@ export const CreateUserForm = () => {
                     </FormItem>
                   )}
                 />
-                {/* <FormField
-                  control={userForm.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
-                          placeholder="user@example.com"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                /> */}
               </div>
             </div>
 
@@ -229,6 +212,44 @@ export const CreateUserForm = () => {
                           showMask
                           replacement={{ _: /\d/ }}
                           {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-medium mb-4">
+                Авторизационные данные
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FormField
+                  control={userForm.control}
+                  name="Login"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel required>Логин</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={userForm.control}
+                  name="Password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel required>Пароль</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type="password"
+                          placeholder="********"
                         />
                       </FormControl>
                       <FormMessage />
