@@ -3,6 +3,7 @@ import { instance } from "@/utils/api/instance";
 export type PostCreateUserParams = CreateUserDto & {
   Login: string;
   Password: string;
+  UserType: "User" | "Worker";
 };
 
 export const postCreateUser = async (body: PostCreateUserParams) =>

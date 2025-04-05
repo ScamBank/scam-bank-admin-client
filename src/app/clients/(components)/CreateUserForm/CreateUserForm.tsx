@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "./constants/formSchema";
@@ -23,6 +23,9 @@ import {
   FormMessage,
   Input,
   Separator,
+  RadioGroup,
+  RadioGroupItem,
+  Label,
 } from "@/components/ui";
 import { useRouter } from "next/navigation";
 import { parse } from "date-fns";
@@ -41,6 +44,7 @@ export const CreateUserForm = () => {
       PhoneNumber: "",
       Snils: "",
       Surname: "",
+      UserType: "User",
     },
   });
 
@@ -57,12 +61,15 @@ export const CreateUserForm = () => {
       PassportSeries: values.passport.split(" ")[0],
       Patronymic: values.Patronymic,
       PhoneNumber: values.PhoneNumber,
-      UserType: "User",
+      UserType: values.UserType,
     } satisfies CreateUserDto;
-    const response = await postCreateUser(body);
-    if (!response.success) {
-      alert(response.error.data.error.split(":")[1] ?? response.error.data);
+    try {
+      await postCreateUser(body);
+      userForm.reset();
+    } catch (e) {
+      alert("Что-то пошло не так");
     }
+
     router.refresh();
   }
 
@@ -225,6 +232,7 @@ export const CreateUserForm = () => {
               <h3 className="text-lg font-medium mb-4">
                 Авторизационные данные
               </h3>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField
                   control={userForm.control}
@@ -257,6 +265,26 @@ export const CreateUserForm = () => {
                   )}
                 />
               </div>
+              <Controller
+                control={userForm.control}
+                name="UserType"
+                render={({ field }) => (
+                  <RadioGroup
+                    value={field.value}
+                    onValueChange={field.onChange}
+                    className="flex mt-3"
+                  >
+                    <div className="flex gap-2 items-center">
+                      <RadioGroupItem id="User" value="User" />
+                      <Label htmlFor="User">Клиент</Label>
+                    </div>
+                    <div className="flex gap-2 items-center">
+                      <RadioGroupItem id="Worker" value="Worker" />
+                      <Label htmlFor="Worker">Работник</Label>
+                    </div>
+                  </RadioGroup>
+                )}
+              />
             </div>
 
             <div className="flex justify-end space-x-4">

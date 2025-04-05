@@ -8,7 +8,7 @@ interface CreateUserDto {
   PassportSeries: string;
   PassportNumber: string;
   Snils: string;
-  UserType: "User";
+  UserType: "User" | "Worker";
 }
 
 interface UserSettings {

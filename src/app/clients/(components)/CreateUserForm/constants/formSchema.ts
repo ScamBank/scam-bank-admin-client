@@ -45,4 +45,5 @@ export const formSchema = z.object({
     .min(2, "Логин должен содержать не менее 2 символов")
     .max(50),
   Password: z.string().min(2, "Пароль должен содержать не менее 2 символов"),
+  UserType: z.enum(["User", "Worker"]),
 });
